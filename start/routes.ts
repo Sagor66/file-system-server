@@ -23,6 +23,6 @@ import Route from '@ioc:Adonis/Core/Route';
 Route.resource('mainFolder', 'MainFoldersController').apiOnly();
 Route.resource('childFolder', 'ChildFoldersController').apiOnly();
 
-// Route.get('/', async () => {
-//   return { hello: 'world' }
-// })
+Route.get('/', async () => {
+  return { hello: 'world' };
+});
