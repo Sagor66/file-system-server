@@ -18,8 +18,11 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from '@ioc:Adonis/Core/Route';
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.resource('mainFolder', 'MainFoldersController').apiOnly();
+Route.resource('childFolder', 'ChildFoldersController').apiOnly();
+
+// Route.get('/', async () => {
+//   return { hello: 'world' }
+// })

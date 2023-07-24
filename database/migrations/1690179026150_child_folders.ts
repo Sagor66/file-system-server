@@ -1,11 +1,12 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema';
 
 export default class extends BaseSchema {
-  protected tableName = 'main_folders';
+  protected tableName = 'child_folders';
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id');
+      table.integer('root_id').unsigned().notNullable();
       table.string('name', 255);
 
       /**
