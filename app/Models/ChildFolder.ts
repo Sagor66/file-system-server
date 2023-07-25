@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm';
 
 export default class ChildFolder extends BaseModel {
   @column({ isPrimary: true })
@@ -10,6 +10,20 @@ export default class ChildFolder extends BaseModel {
 
   @column()
   public name: string;
+
+  @belongsTo(() => ChildFolder, {
+    foreignKey: 'root_id',
+  })
+  public root: BelongsTo<typeof ChildFolder>;
+
+  @hasMany(() => ChildFolder, {
+    localKey: 'id',
+    foreignKey: 'root_id',
+    onQuery: (q) => {
+      q.whereColumn('id', '!=', 'root_id');
+    },
+  })
+  public children: HasMany<typeof ChildFolder>;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

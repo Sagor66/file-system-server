@@ -5,6 +5,7 @@ import ChildFolder from 'App/Models/ChildFolder';
 export default class ChildFoldersController {
   public async index({ response }) {
     const childFolders = await ChildFolder.all();
+    // const childFolders = await ChildFolder.query().preload('children');
 
     return response.ok(childFolders);
   }
@@ -24,7 +25,15 @@ export default class ChildFoldersController {
   public async show({ params, response }) {
     const { id }: { id: Number } = params;
 
-    const childFolder: any = await ChildFolder.find(id);
+    // const childFolder: any = await ChildFolder.find(id);
+
+    const childFolder: any = await ChildFolder.query().where('root_id', id).select('name', 'root_id', 'id');
+
+    // const childFolder: any = await ChildFolder.query()
+    //   .where('id', id)
+    //   .preload('root')
+    //   .preload('children');
+
     if (!childFolder) {
       return response.notFound({ message: 'Folder not found' });
     }
